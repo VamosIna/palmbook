@@ -138,7 +138,8 @@ Below is a sample output from running the test suite with mocks generated:
 ## 👨‍💻 Credits
 
 - Created by [VamosIna](https://github.com/VamosIna)
-- Architecture, template, and testing by the development team
+- +62 85158921108
+- Linkedin  : [https://www.linkedin.com/in/yoppie-raditya-wicaksono/](https://www.linkedin.com/in/yoppie-raditya-wicaksono/)
 
 ---
 
