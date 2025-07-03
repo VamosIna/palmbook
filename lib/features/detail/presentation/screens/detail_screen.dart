@@ -22,30 +22,8 @@ class DetailScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(book.title),
-          actions: [
-            BlocBuilder<DetailBloc, DetailState>(
-              builder: (context, state) {
-                if (state is LikeUpdating) {
-                  return const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-                if (state is BookLiked) {
-                  return IconButton(
-                    icon: Icon(
-                      state.isLiked ? Icons.favorite : Icons.favorite_border,
-                      color: state.isLiked ? AppColors.primary : null,
-                    ),
-                    onPressed: () {
-                      context.read<DetailBloc>().add(ToggleLike(book: book));
-                    },
-                  );
-                }
-                return const SizedBox();
-              },
-            ),
+          actions: const [
+            SizedBox(),
           ],
         ),
         body: SingleChildScrollView(
@@ -54,33 +32,84 @@ class DetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child:
-                    book.coverUrl != null
-                        ? CachedNetworkImage(
-                          imageUrl: book.coverUrl!,
-                          height: 300,
-                          fit: BoxFit.contain,
-                          placeholder:
-                              (context, url) => Container(
+                child: SizedBox(
+                  width: 200,
+                  height: 300,
+                  child: Stack(
+                    children: [
+                      book.coverUrl != null
+                          ? CachedNetworkImage(
+                              imageUrl: book.coverUrl!,
+                              height: 300,
+                              width: 200,
+                              fit: BoxFit.contain,
+                              placeholder: (context, url) => Container(
                                 height: 300,
+                                width: 200,
                                 color: Colors.grey[200],
                                 child: const Icon(Icons.book, size: 100),
                               ),
-                          errorWidget:
-                              (context, url, error) => Container(
+                              errorWidget: (context, url, error) => Container(
                                 height: 300,
+                                width: 200,
                                 color: Colors.grey[200],
                                 child: const Icon(
                                   Icons.broken_image,
                                   size: 100,
                                 ),
                               ),
-                        )
-                        : Container(
-                          height: 300,
-                          color: Colors.grey[200],
-                          child: const Icon(Icons.book, size: 100),
+                            )
+                          : Container(
+                              height: 300,
+                              width: 200,
+                              color: Colors.grey[200],
+                              child: const Icon(Icons.book, size: 100),
+                            ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: BlocBuilder<DetailBloc, DetailState>(
+                          builder: (context, state) {
+                            if (state is LikeUpdating) {
+                              return const SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: CircularProgressIndicator(strokeWidth: 2),
+                              );
+                            }
+                            if (state is BookLiked) {
+                              return Container(
+                                width: 40,
+                                height: 40,
+                                child: IconButton(
+                                  icon: Icon(
+                                    state.isLiked
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: state.isLiked
+                                        ? AppColors.danger
+                                        : AppColors.primary,
+                                    size: 32,
+                                  ),
+                                  onPressed: () {
+                                    context
+                                        .read<DetailBloc>()
+                                        .add(ToggleLike(book: book));
+                                  },
+                                  iconSize: 32,
+                                  splashRadius: 24,
+                                  tooltip: state.isLiked
+                                      ? 'Unlike'
+                                      : 'Like',
+                                ),
+                              );
+                            }
+                            return const SizedBox(width: 40, height: 40);
+                          },
                         ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
               Text(

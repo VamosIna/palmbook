@@ -18,7 +18,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   }
 
   void _onFetchBooks(FetchBooks event, Emitter<BookState> emit) async {
-    if (state is BookLoaded && (hasReachedMax || event.isInitial)) return;
+    if (state is BookLoaded && hasReachedMax && !event.isInitial) return;
 
     if (event.isInitial) {
       page = 1;

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:com_palmcode_book/core/widgets/book_card.dart';
@@ -43,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: const Icon(Icons.search),
               onPressed: () {
                 _bookBloc.add(SearchBooks(query: _searchController.text));
+                log("search query: ${_searchController.text}");
               },
             ),
           ),
