@@ -135,6 +135,12 @@ Below is a sample output from running the test suite with mocks generated:
 
 ---
 
+## 🌐 APK
+
+- [APK File](https://drive.google.com/file/d/1LUDNaC2hZqY8m5DUSbBvmuljeaOV7SCR/view?usp=sharing) — File APK
+
+---
+
 ## 👨‍💻 Credits
 
 - Created by [VamosIna](https://github.com/VamosIna)
